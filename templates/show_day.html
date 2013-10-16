@@ -8,7 +8,11 @@
   {% for entry in entries %}
     <li>
       {% if session.logged_in %}
-        <span class="delete">[<a href="/{{day}}/delete/?id={{entry.id}}" onClick="return confirm('Eintrag von {{entry.time}} loeschen?')">x</a>]</span>
+        <span class="delete">
+          <form method="POST" action="/{{day}}/delete/?id={{entry.id}}">
+            <input type="submit" value="x" onClick="return confirm('Eintrag von {{entry.time}} loeschen?')" />
+          </form>
+        </span>
       {% endif %}
       <span class="time">{{entry.time}}</span> {{ entry.text|safe }}
     </li>

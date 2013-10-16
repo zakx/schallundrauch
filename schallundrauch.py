@@ -80,7 +80,7 @@ def show_day(date):
 	entries = cur.fetchall()
 	return render_template('show_day.html', entries=entries, day=date, time=datetime.datetime.now().strftime("%H:%M"))
 
-@app.route('/<regex("(\d){4}-(\d){2}-(\d){2}"):date>/delete/', methods=['GET'])
+@app.route('/<regex("(\d){4}-(\d){2}-(\d){2}"):date>/delete/', methods=['POST'])
 def delete_post(date):
 	if not session.get('logged_in'):
 		abort(401)

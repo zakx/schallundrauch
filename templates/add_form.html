@@ -1,0 +1,13 @@
+  {% if session.logged_in %}
+    <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+      <input type="hidden" name="return" value="{{ day }}" />
+      <dl>
+        <dd>
+          <input type="text" name="date" value="{{ day }}" />
+          <input type="text" name="time" value="{{ time }}" />
+        </dd>
+        <dd><textarea name="text" rows="5" cols="60"></textarea></dd>
+        <dd><input type="submit" value="Share"></dd>
+      </dl>
+    </form>
+  {% endif %}

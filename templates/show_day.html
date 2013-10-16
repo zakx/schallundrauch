@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% include "add_form.html" %}
+  <ul class="entries">
+    <li><h2>{{ day }}</h2></li>
+  </li>
+  <ul class="day">
+  {% for entry in entries %}
+    <li><span class="time">{{entry.time}}</span> {{ entry.text|safe }}</li>
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em></li>
+  {% endfor %}
+  </ul>
+{% endblock %}

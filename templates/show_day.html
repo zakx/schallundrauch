@@ -6,7 +6,12 @@
   </li>
   <ul class="day">
   {% for entry in entries %}
-    <li><span class="time">{{entry.time}}</span> {{ entry.text|safe }}</li>
+    <li>
+      {% if session.logged_in %}
+        <span class="delete">[<a href="/{{day}}/delete/?id={{entry.id}}" onClick="return confirm('Eintrag von {{entry.time}} loeschen?')">x</a>]</span>
+      {% endif %}
+      <span class="time">{{entry.time}}</span> {{ entry.text|safe }}
+    </li>
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em></li>
   {% endfor %}

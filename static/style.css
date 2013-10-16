@@ -11,6 +11,7 @@ h2              { font-size: 1.2em; }
 .entries li     { margin: 0.6em 1.2em; }
 .day li         { margin: 0.6em 0.2em; }
 span.time       { color: gray; font-size: smaller; }
+span.delete a   { color: red; }
 .add-entry      { font-size: 0.9em; border-bottom: 1px solid #ccc; }
 .add-entry dl   { font-weight: bold; }
 .metanav        { text-align: right; font-size: x-small; padding: 0.3em;

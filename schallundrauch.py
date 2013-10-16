@@ -72,7 +72,7 @@ def show_entries():
 	entries = cur.fetchall()
 	return render_template('show_entries.html', entries=entries, day=datetime.date.today(), time=datetime.datetime.now().strftime("%H:%M"))
 
-@app.route('/<regex("(\d){4}-(\d){2}-(\d){2}"):date>')
+@app.route('/<regex("(\d){4}-(\d){2}-(\d){2}"):date>/')
 def show_day(date):
 	db = get_db()
 	cur = db.execute('select * from entries where date = ? order by time desc',
@@ -80,6 +80,15 @@ def show_day(date):
 	entries = cur.fetchall()
 	return render_template('show_day.html', entries=entries, day=date, time=datetime.datetime.now().strftime("%H:%M"))
 
+@app.route('/<regex("(\d){4}-(\d){2}-(\d){2}"):date>/delete/', methods=['GET'])
+def delete_post(date):
+	if not session.get('logged_in'):
+		abort(401)
+	db = get_db()
+	db.execute('delete from entries where id = ?', [int(request.args['id']),])
+	db.commit()
+	flash('Entry was successfully deleted')
+	return redirect(url_for('show_day', date=date))
 
 @app.route('/add', methods=['POST'])
 def add_entry():

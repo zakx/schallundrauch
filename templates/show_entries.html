@@ -3,7 +3,7 @@
   {% include "add_form.html" %}
   <ul class="entries">
   {% for entry in entries %}
-    <li><h2><a href="/{{ entry.date }}/">{{ entry.date }}</a></h2></li>
+    <li><h2><a href="/{{ entry.date }}/"><time>{{ entry.date }}</time></a></h2></li>
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em></li>
   {% endfor %}

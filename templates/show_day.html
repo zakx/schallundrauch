@@ -6,7 +6,7 @@
   </li>
   <ul class="day">
   {% for entry in entries %}
-    <li id="{{ entry.time }}">
+    <li>
       {% if session.logged_in %}
         <span class="delete">
           <form method="POST" action="/{{day}}/delete/?id={{entry.id}}">
@@ -14,7 +14,7 @@
           </form>
         </span>
       {% endif %}
-      <a href="#{{ entry.time }}"><time>{{entry.time}}</time></a> {{ entry.text|safe }}
+      <span class="time">{{entry.time}}</span> {{ entry.text|safe }}
     </li>
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em></li>

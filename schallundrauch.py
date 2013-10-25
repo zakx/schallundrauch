@@ -89,7 +89,7 @@ def feed():
 	for entry in entries:
 		entry_id, entry_date, entry_time, entry_text = entry
 		published = datetime.datetime.strptime(
-			"%s %s CEST" % (entry_date, entry_time),
+			"%s %s CET" % (entry_date, entry_time),
 			"%Y-%m-%d %H:%M %Z"
 		)
 		entry_title = "%s %s" % (entry_date, entry_time)

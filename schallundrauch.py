@@ -10,6 +10,7 @@ from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
 	 render_template, flash
 from werkzeug.routing import BaseConverter
+from werkzeug.contrib.atom import AtomFeed
 import re
 import datetime
 
@@ -71,6 +72,44 @@ def show_entries():
 	cur = db.execute('select distinct date from entries order by date desc')
 	entries = cur.fetchall()
 	return render_template('show_entries.html', entries=entries, day=datetime.date.today(), time=datetime.datetime.now().strftime("%H:%M"))
+
+
+@app.route('/index.atom')
+def feed():
+	db = get_db()
+	cur = db.execute('select id, date, time, text from entries order by date desc')
+	entries = cur.fetchall()
+	host = request.host.split(':')[0]  # remove port
+	feed = AtomFeed(
+		title="nein",
+		feed_url=request.url,
+		url=request.url_root,
+		author="nein"
+	)
+	for entry in entries:
+		entry_id, entry_date, entry_time, entry_text = entry
+		published = datetime.datetime.strptime(
+			"%s %s CEST" % (entry_date, entry_time),
+			"%Y-%m-%d %H:%M %Z"
+		)
+		entry_title = "%s %s" % (entry_date, entry_time)
+		entry_id = 'tag:%s,%s:%s' % (host, entry_date, entry_id)
+		feed.add(
+			id=entry_id,
+			title=entry_title,
+			content=entry_text,
+			content_type='html',
+			published=published,
+			updated=published,
+			links=[{
+					'href': 'http://%s/%s#%s' %
+					(request.host,
+					entry_date,
+					entry_time)
+			}]
+		)
+	return feed.get_response()
+
 
 @app.route('/<regex("(\d){4}-(\d){2}-(\d){2}"):date>/')
 def show_day(date):

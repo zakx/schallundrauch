@@ -81,10 +81,10 @@ def feed():
 	entries = cur.fetchall()
 	host = request.host.split(':')[0]  # remove port
 	feed = AtomFeed(
-		title="nein (%s)" % app.config['USERNAME'],
+		title="nein",
 		feed_url=request.url,
 		url=request.url_root,
-		author=app.config['USERNAME']
+		author="nein"
 	)
 	for entry in entries:
 		entry_id, entry_date, entry_time, entry_text = entry
